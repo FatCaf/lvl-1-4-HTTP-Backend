@@ -7,6 +7,8 @@
   max-width: 56.25rem;
   margin: 0 auto;
   padding: 0 0.9375rem;
+  display: flex;
+  justify-content: space-around;
 }
 
 .tables__row {
@@ -41,4 +43,24 @@ tr:hover {
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete__button {
+  background-color: red;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.action__panel {
+  padding: 3.125rem;
+  background-color: gray;
+  margin-left: 1.25rem;
 }
