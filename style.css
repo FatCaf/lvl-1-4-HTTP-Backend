@@ -64,3 +64,7 @@ tr:nth-child(even) {
   background-color: gray;
   margin-left: 1.25rem;
 }
+
+.highlighted {
+  background-color: red;
+}
