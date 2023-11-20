@@ -4,7 +4,7 @@ const config1 = {
     { title: "Ім’я", value: "name" },
     { title: "Прізвище", value: "surname" },
     { title: "Аватар", value: "avatar" },
-    { title: "Дата Народження", value: "dob" },
+    { title: "Дата Народження", value: "birthday" },
   ],
 
   apiURL: "https://mock-api.shpp.me/mneklesa/users",
