@@ -1,48 +1,56 @@
 import { getParent, getColumns, getUrl } from "./tableConfig.js";
 import { processData } from "./dataProcessor.js";
+import { attachDeleteButtonListeners } from "./tableManipulator.js";
 
 export async function renderData() {
   const table__body = document.querySelector(".table__body");
+  table__body.innerHTML = "";
   let url = getUrl();
-  let userObject = await processData("GET", url);
 
-  for (const user in userObject) {
-    table__body.insertAdjacentHTML(
-      "beforeend",
-      `
+  try {
+    let userObject = await processData("GET", url);
+
+    for (const user in userObject) {
+      table__body.insertAdjacentHTML(
+        "beforeend",
+        `
         <tr class="table__body__row" id="${user}"></tr>
         `
-    );
-    const content = document.querySelector(".table__body__row:last-child");
-    for (const key in userObject[user]) {
-      if (key === "birthday") {
-        const date = new Date(userObject[user][key]);
-        content.insertAdjacentHTML(
-          "beforeend",
-          `
+      );
+      const content = document.querySelector(".table__body__row:last-child");
+      for (const key in userObject[user]) {
+        if (key === "birthday") {
+          const date = new Date(userObject[user][key]);
+          content.insertAdjacentHTML(
+            "beforeend",
+            `
           <td>${date.toDateString()}</td>`
-        );
-      } else if (key === "avatar") {
-        const source = userObject[user][key];
-        content.insertAdjacentHTML(
-          "beforeend",
-          `
+          );
+        } else if (key === "avatar") {
+          const source = userObject[user][key];
+          content.insertAdjacentHTML(
+            "beforeend",
+            `
           <td><image src="${source}"/></td>`
-        );
-      } else {
-        content.insertAdjacentHTML(
-          "beforeend",
-          `
+          );
+        } else {
+          content.insertAdjacentHTML(
+            "beforeend",
+            `
           <td>${userObject[user][key]}</td>`
-        );
+          );
+        }
       }
-    }
 
-    content.insertAdjacentHTML(
-      "beforeend",
-      `<div class="options"><button class="delete__button"
+      content.insertAdjacentHTML(
+        "beforeend",
+        `<div class="options"><button class="delete__button"
     data-id="${user}">Delete</button></div>`
-    );
+      );
+    }
+    attachDeleteButtonListeners();
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
