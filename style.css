@@ -1,3 +1,9 @@
+button {
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+}
+
 .main {
   display: flex;
   justify-content: center;
@@ -47,24 +53,46 @@ tr:nth-child(even) {
 
 .options {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  height: 14vh;
+}
+
+.add__button,
+.add {
+  background-color: green;
+  border-radius: 4px;
+  font-size: 1.125rem;
+}
+
+.cancel {
+  background-color: gray;
+  border-radius: 4px;
+  font-size: 1.125rem;
+  margin-left: 0.3125rem;
+}
+
+.find__button {
+  background-color: yellow;
+  border-radius: 4px;
+  font-size: 1.125rem;
 }
 
 .delete__button {
   background-color: red;
-  border: none;
   font-size: 1.5rem;
-  cursor: pointer;
   border-radius: 4px;
 }
 
 .action__panel {
   padding: 3.125rem;
-  background-color: gray;
   margin-left: 1.25rem;
 }
 
+.add__button {
+  margin-top: 0.625rem;
+}
+
 .highlighted {
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.5);
 }
