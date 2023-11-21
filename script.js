@@ -1,19 +1,14 @@
-import { processData } from "./dataProcessor.js";
-import { renderData, renderHeaders, renderStructure } from "./dataRenderer.js";
-import { getUrl } from "./tableConfig.js";
+import {
+  renderData,
+  renderHeaders,
+  renderStructure,
+} from "./tableRender/dataRenderer.js";
 
-function DataTable() {
-  // let userObject;
-  // let url = getUrl();
-  // try {
-  //   userObject = processData("GET", url);
-  // } catch (error) {
-  //   console.log(error.message);
-  // }
+import { addUserHandler } from "./tableActions/addUser.js";
+import { findUserHandler } from "./tableActions/findUser.js";
 
-  renderStructure();
-  renderHeaders();
-  renderData();
-}
-
-DataTable();
+renderStructure();
+renderHeaders();
+renderData();
+addUserHandler();
+findUserHandler();
