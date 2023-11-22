@@ -4,7 +4,7 @@
  * @param {string} url Source of data.
  * @returns parsed object with data.
  */
-export async function processData(url) {
+export async function processData(method, url) {
   try {
     const response = await fetch(url);
     const data = await response.json();
