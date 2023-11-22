@@ -2,39 +2,45 @@ import { getParent, getColumns, getUrl } from "./tableConfig.js";
 import { processData } from "./dataProcessor.js";
 import { attachDeleteButtonListeners } from "../tableActions/deleteUser.js";
 
+/**
+ * Fill the td elements in table with specified data from api url.
+ */
 export async function renderData() {
-  const table__body = document.querySelector(".table__body");
-  table__body.innerHTML = "";
+  const tableBody = document.querySelector(".table__body");
+  const tableHeader = document.querySelector(".table__header");
+  tableBody.innerHTML = "";
   let url = getUrl();
 
   try {
     let userObject = await processData("GET", url);
 
     for (const user in userObject) {
-      table__body.insertAdjacentHTML(
+      tableBody.insertAdjacentHTML(
         "beforeend",
         `
         <tr class="table__body__row" id="${user}"></tr>
         `
       );
-      const content = document.querySelector(".table__body__row:last-child");
+      const tableRow = document.querySelector(".table__body__row:last-child");
       for (const key in userObject[user]) {
-        if (key === "birthday") {
-          const date = renderDate(userObject[user][key]);
-          content.insertAdjacentHTML(
-            "beforeend",
-            `
-          <td class="date">${date}</td>`
-          );
-        } else if (key === "avatar") {
-          const source = userObject[user][key];
-          content.insertAdjacentHTML(
-            "beforeend",
-            `
+        if (tableHeader.querySelector(`.${key}`).getAttribute("data-render")) {
+          if (isLink(userObject[user][key])) {
+            const source = userObject[user][key];
+            tableRow.insertAdjacentHTML(
+              "beforeend",
+              `
           <td><image src="${source}"/></td>`
-          );
+            );
+          } else {
+            const date = renderDate(userObject[user][key]);
+            tableRow.insertAdjacentHTML(
+              "beforeend",
+              `
+          <td class="date">${date}</td>`
+            );
+          }
         } else {
-          content.insertAdjacentHTML(
+          tableRow.insertAdjacentHTML(
             "beforeend",
             `
           <td>${userObject[user][key]}</td>`
@@ -42,7 +48,7 @@ export async function renderData() {
         }
       }
 
-      content.insertAdjacentHTML(
+      tableRow.insertAdjacentHTML(
         "beforeend",
         `<td class="options"><button class="delete__button"
     data-id="${user}">Delete</button></td>`
@@ -62,11 +68,20 @@ function renderDate(value) {
   return `${day}.${month}.${date.getFullYear()}`;
 }
 
+function isLink(link) {
+  const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+  return urlRegex.test(link);
+}
+
+/**
+ * Rendering table header, depends on table configuration.
+ */
 export function renderHeaders() {
-  const table__header = document.querySelector(".table__header");
+  const tableHeader = document.querySelector(".table__header");
   let columns = getColumns();
 
-  table__header.insertAdjacentHTML(
+  tableHeader.insertAdjacentHTML(
     "beforeend",
     `<tr class="table__header__row">
       </tr>`
@@ -75,11 +90,19 @@ export function renderHeaders() {
   const header = document.querySelector(".table__header__row");
 
   for (const item of columns) {
-    header.insertAdjacentHTML(
-      "beforeend",
-      `
-            <th class="${item.value}">${item.title}</th>`
-    );
+    if (item.hasOwnProperty("render")) {
+      header.insertAdjacentHTML(
+        "beforeend",
+        `
+              <th class="${item.value}" data-render="true">${item.title}</th>`
+      );
+    } else {
+      header.insertAdjacentHTML(
+        "beforeend",
+        `
+              <th class="${item.value}">${item.title}</th>`
+      );
+    }
   }
 
   header.insertAdjacentHTML("beforeend", `<th class="actions">Дії</th>`);
