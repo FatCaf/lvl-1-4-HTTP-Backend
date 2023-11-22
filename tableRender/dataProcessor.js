@@ -1,4 +1,10 @@
-export async function processData(method, url) {
+/**
+ * Send "GET" request and returns object with data if possible.
+ *
+ * @param {string} url Source of data.
+ * @returns parsed object with data.
+ */
+export async function processData(url) {
   try {
     const response = await fetch(url);
     const data = await response.json();
