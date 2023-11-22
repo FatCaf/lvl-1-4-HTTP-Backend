@@ -3,8 +3,8 @@ const config1 = {
   columns: [
     { title: "Ім’я", value: "name" },
     { title: "Прізвище", value: "surname" },
-    { title: "Аватар", value: "avatar" },
-    { title: "Дата Народження", value: "birthday" },
+    { title: "Аватар", value: "avatar", render: "true" },
+    { title: "Дата Народження", value: "birthday", render: "true" },
   ],
 
   apiURL: "https://mock-api.shpp.me/mneklesa/users",
