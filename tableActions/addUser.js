@@ -3,10 +3,13 @@ import { getColumns, getUrl } from "../tableRender/tableConfig.js";
 export function addUserHandler() {
   const addBtn = document.querySelector(".add__button");
 
-  addBtn.addEventListener("click", addUser);
+  addBtn.addEventListener("click", addUserInputs);
 }
 
-function addUser() {
+/**
+ * Adds functionality for being able to add new user to table.
+ */
+function addUserInputs() {
   const tableBody = document.querySelector(".table__body");
 
   tableBody.insertAdjacentHTML(
@@ -30,47 +33,52 @@ function addUser() {
 
   const add = document.querySelector(".add");
 
+  add.addEventListener("click", addUser);
+}
+
+/**
+ * Send "POST" request to add new user to table.
+ *
+ * @returns nothing.
+ */
+async function addUser() {
   let headers = getColumns();
-  let url = getUrl();
+  const newRow = document.querySelector(".new__user");
 
-  add.addEventListener("click", async () => {
-    const newRow = document.querySelector(".new__user");
+  let combinedValues = {};
 
-    let combinedValues = {};
+  headers.forEach((header) => {
+    const input = newRow.querySelector(`.${header.value}`);
 
-    headers.forEach((header) => {
-      const input = newRow.querySelector(`.${header.value}`);
-
-      if (!input.value.trim()) {
-        alert(`Please enter a value for ${header.title}`);
-        return;
-      }
-
-      combinedValues[header.value] = input.value;
-    });
-
-    if (Object.keys(combinedValues).length < headers.length) {
+    if (!input.value.trim()) {
+      alert(`Please enter a value for ${header.title}`);
       return;
-    } else {
-      const jsonData = JSON.stringify(combinedValues);
-
-      try {
-        const response = await fetch(getUrl(), {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: jsonData,
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        renderData();
-      } catch (error) {
-        console.error("Error: ", error.message);
-      }
     }
+
+    combinedValues[header.value] = input.value;
   });
+
+  if (Object.keys(combinedValues).length < headers.length) {
+    return;
+  } else {
+    const jsonData = JSON.stringify(combinedValues);
+
+    try {
+      const response = await fetch(getUrl(), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      await renderData();
+    } catch (error) {
+      console.error("Error: ", error.message);
+    }
+  }
 }

@@ -4,6 +4,9 @@ export function findUserHandler() {
   findBtn.addEventListener("click", findUser);
 }
 
+/**
+ * Finds user by specified data from input field.
+ */
 function findUser() {
   const [...userInfo] = document.querySelectorAll(".table__body__row");
 
@@ -48,6 +51,11 @@ function findUser() {
   });
 }
 
+/**
+ * Allocates element which was found.
+ *
+ * @param {HTMLElement} td HTML Element that needs to be highlighted.
+ */
 function highlightMatchedTD(td) {
   td.classList.add("highlighted");
   setTimeout(() => {
