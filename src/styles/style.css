@@ -1,0 +1,98 @@
+button {
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  max-width: 56.25rem;
+  margin: 0 auto;
+  padding: 0 0.9375rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.tables__row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table__body .table__header {
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 14vh;
+}
+
+.add__button,
+.add {
+  background-color: green;
+  border-radius: 4px;
+  font-size: 1.125rem;
+}
+
+.cancel {
+  background-color: gray;
+  border-radius: 4px;
+  font-size: 1.125rem;
+  margin-left: 0.3125rem;
+}
+
+.find__button {
+  background-color: yellow;
+  border-radius: 4px;
+  font-size: 1.125rem;
+}
+
+.delete__button {
+  background-color: red;
+  font-size: 1.5rem;
+  border-radius: 4px;
+}
+
+.action__panel {
+  padding: 3.125rem;
+  margin-left: 1.25rem;
+}
+
+.add__button {
+  margin-top: 0.625rem;
+}
+
+.highlighted {
+  background-color: rgba(255, 0, 0, 0.5);
+}
