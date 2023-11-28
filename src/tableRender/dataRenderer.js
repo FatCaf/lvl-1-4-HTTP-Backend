@@ -1,67 +1,58 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-restricted-syntax */
-import { getParent, getColumns, getUrl } from "./tableConfig";
-import processData from "./dataProcessor";
-// eslint-disable-next-line import/no-cycle
-import attachDeleteButtonListeners from "../tableActions/deleteUser";
 
 /**
  * Fill the td elements in table with specified data from api url.
  */
-export async function renderData() {
+export function renderData(userObject) {
   const tableBody = document.querySelector(".table__body");
   const tableHeader = document.querySelector(".table__header");
   tableBody.innerHTML = "";
-  const url = getUrl();
 
-  try {
-    const userObject = await processData("GET", url);
-
-    // eslint-disable-next-line guard-for-in
-    for (const user in userObject) {
-      tableBody.insertAdjacentHTML(
-        "beforeend",
-        `
+  // eslint-disable-next-line guard-for-in
+  for (const user in userObject) {
+    tableBody.insertAdjacentHTML(
+      "beforeend",
+      `
         <tr class="table__body__row" id="${user}"></tr>
         `,
-      );
-      const tableRow = document.querySelector(".table__body__row:last-child");
-      for (const key in userObject[user]) {
-        if (tableHeader.querySelector(`.${key}`).getAttribute("data-render")) {
-          if (isLink(userObject[user][key])) {
-            const source = userObject[user][key];
-            tableRow.insertAdjacentHTML(
-              "beforeend",
-              `
-          <td><image src="${source}"/></td>`,
-            );
-          } else {
-            const date = renderDate(userObject[user][key]);
-            tableRow.insertAdjacentHTML(
-              "beforeend",
-              `
-          <td class="date">${date}</td>`,
-            );
-          }
-        } else {
+    );
+
+    const tableRow = document.querySelector(".table__body__row:last-child");
+
+    for (const key in userObject[user]) {
+      if (tableHeader.querySelector(`.${key}`).getAttribute("data-render")) {
+        if (isLink(userObject[user][key])) {
+          const source = userObject[user][key];
           tableRow.insertAdjacentHTML(
             "beforeend",
             `
-          <td>${userObject[user][key]}</td>`,
+          <td><img src="${source}"/></td>`,
+          );
+        } else {
+          const date = renderDate(userObject[user][key]);
+          tableRow.insertAdjacentHTML(
+            "beforeend",
+            `
+          <td class="date">${date}</td>`,
           );
         }
+      } else {
+        tableRow.insertAdjacentHTML(
+          "beforeend",
+          `
+          <td>${userObject[user][key]}</td>`,
+        );
       }
-
-      tableRow.insertAdjacentHTML(
-        "beforeend",
-        `<td class="options"><button class="delete__button"
-    data-id="${user}">Delete</button></td>`,
-      );
     }
-    attachDeleteButtonListeners();
-  } catch (error) {
-    throw new Error(error.message);
+
+    tableRow.insertAdjacentHTML(
+      "beforeend",
+      `<td class="options"><button class="delete__button"
+    data-id="${user}">Delete</button></td>`,
+    );
   }
+  return true;
 }
 
 function renderDate(value) {
@@ -81,9 +72,8 @@ function isLink(link) {
 /**
  * Rendering table header, depends on table configuration.
  */
-export function renderHeaders() {
+export function renderHeaders(columns) {
   const tableHeader = document.querySelector(".table__header");
-  const columns = getColumns();
 
   tableHeader.insertAdjacentHTML(
     "beforeend",
@@ -112,8 +102,7 @@ export function renderHeaders() {
   header.insertAdjacentHTML("beforeend", '<th class="actions">Дії</th>');
 }
 
-export function renderStructure() {
-  const parentElement = getParent();
+export function renderStructure(parentElement) {
   const table = document.createElement("table");
 
   document
