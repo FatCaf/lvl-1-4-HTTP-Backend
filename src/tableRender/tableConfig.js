@@ -1,10 +1,19 @@
+/* eslint-disable no-use-before-define */
 const config1 = {
   parent: "#usersTable",
   columns: [
     { title: "Ім’я", value: "name" },
     { title: "Прізвище", value: "surname" },
-    { title: "Аватар", value: "avatar", render: "true" },
-    { title: "Дата Народження", value: "birthday", render: "true" },
+    {
+      title: "Аватар",
+      value: "avatar",
+      render: "true",
+    },
+    {
+      title: "Дата Народження",
+      value: "birthday",
+      render: "true",
+    },
   ],
 
   apiURL: "https://mock-api.shpp.me/mneklesa/users",
