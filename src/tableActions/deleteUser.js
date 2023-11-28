@@ -1,12 +1,14 @@
-import { renderData } from "../tableRender/dataRenderer.js";
-import { getUrl } from "../tableRender/tableConfig.js";
+/* eslint-disable no-use-before-define */
+// eslint-disable-next-line import/no-cycle
+import { renderData } from "../tableRender/dataRenderer";
+import { getUrl } from "../tableRender/tableConfig";
 
-export function attachDeleteButtonListeners() {
+export default function attachDeleteButtonListeners() {
   const deleteButtons = document.querySelectorAll(".delete__button");
 
   [...deleteButtons].forEach((button) => {
     button.addEventListener("click", () => {
-      let toDelete = `${getUrl()}/${button.getAttribute("data-id")}`;
+      const toDelete = `${getUrl()}/${button.getAttribute("data-id")}`;
       deleteUser(toDelete);
     });
   });
@@ -18,19 +20,19 @@ export function attachDeleteButtonListeners() {
  * @param {string} url User url which need to be deleted.
  */
 async function deleteUser(url) {
-  const response = await fetch(url, {
+  await fetch(url, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
   })
-    .then((response) => {
+    .then(async (response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      renderData();
+      await renderData();
     })
     .catch((error) => {
-      console.error("Error: ", error.message);
+      throw new Error(error.message);
     });
 }

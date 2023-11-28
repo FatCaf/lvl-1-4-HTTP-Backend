@@ -1,6 +1,8 @@
-import { getColumns, getUrl } from "../tableRender/tableConfig.js";
+/* eslint-disable no-use-before-define */
+import { getColumns, getUrl } from "../tableRender/tableConfig";
+import { renderData } from "../tableRender/dataRenderer";
 
-export function addUserHandler() {
+export default function addUserHandler() {
   const addBtn = document.querySelector(".add__button");
 
   addBtn.addEventListener("click", addUserInputs);
@@ -21,7 +23,7 @@ function addUserInputs() {
   <td><input class="birthday" type="text" placeholder="Enter birth"/></td>
   <td class="options"><button class="add">Add</button>
   <button class="cancel">Cancel</button></td>
-  </tr>`
+  </tr>`,
   );
 
   const cancel = document.querySelector(".cancel");
@@ -42,15 +44,16 @@ function addUserInputs() {
  * @returns nothing.
  */
 async function addUser() {
-  let headers = getColumns();
+  const headers = getColumns();
   const newRow = document.querySelector(".new__user");
 
-  let combinedValues = {};
+  const combinedValues = {};
 
   headers.forEach((header) => {
     const input = newRow.querySelector(`.${header.value}`);
 
     if (!input.value.trim()) {
+      // eslint-disable-next-line no-alert
       alert(`Please enter a value for ${header.title}`);
       return;
     }
@@ -60,25 +63,24 @@ async function addUser() {
 
   if (Object.keys(combinedValues).length < headers.length) {
     return;
-  } else {
-    const jsonData = JSON.stringify(combinedValues);
+  }
+  const jsonData = JSON.stringify(combinedValues);
 
-    try {
-      const response = await fetch(getUrl(), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonData,
-      });
+  try {
+    const response = await fetch(getUrl(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      await renderData();
-    } catch (error) {
-      console.error("Error: ", error.message);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    await renderData();
+  } catch (error) {
+    throw new Error(error.message);
   }
 }

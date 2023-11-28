@@ -11,19 +11,22 @@ const config1 = {
 };
 
 export function getParent() {
-  if (config1.hasOwnProperty("parent")) {
+  if (Object.prototype.hasOwnProperty.call(config1, "parent")) {
     return config1.parent;
   }
+  return null;
 }
 
 export function getColumns() {
-  if (config1.hasOwnProperty("columns")) {
+  if (Object.prototype.hasOwnProperty.call(config1, "columns")) {
     return config1.columns;
   }
+  return null;
 }
 
 export function getUrl() {
-  if (config1.hasOwnProperty("apiURL")) {
+  if (Object.prototype.hasOwnProperty.call(config1, "apiURL")) {
     return config1.apiURL;
   }
+  return null;
 }

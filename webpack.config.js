@@ -1,15 +1,16 @@
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
+const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV === 'development';
 
 const optimization = () => {
   const config = {
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
     },
   };
 
@@ -26,12 +27,12 @@ const optimization = () => {
 };
 
 module.exports = {
-  context: path.resolve(__dirname, "src"),
-  mode: "production",
-  entry: "./script.js",
+  context: path.resolve(__dirname, 'src'),
+  mode: 'production',
+  entry: './script.js',
   output: {
-    filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist"),
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
   optimization: optimization(),
@@ -53,22 +54,23 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
           },
-          "css-loader",
+          'css-loader',
         ],
       },
     ],
   },
   resolve: {
-    extensions: [".js", ".css"],
+    extensions: ['.js', '.css'],
   },
   plugins: [
     new HTMLWebpackPlugin({
-      title: "lvl-1-4",
-      template: "./index.html",
-      inject: "body",
+      title: 'lvl-1-4',
+      template: './index.html',
+      inject: 'body',
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
+      filename: '[name].[contenthash].css',
     }),
+    new ESLintPlugin(),
   ],
 };

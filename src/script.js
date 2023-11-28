@@ -4,10 +4,10 @@ import {
   renderData,
   renderHeaders,
   renderStructure,
-} from "./tableRender/dataRenderer.js";
+} from "./tableRender/dataRenderer";
 
-import { addUserHandler } from "./tableActions/addUser.js";
-import { findUserHandler } from "./tableActions/findUser.js";
+import addUserHandler from "./tableActions/addUser";
+import findUserHandler from "./tableActions/findUser";
 
 renderStructure();
 renderHeaders();

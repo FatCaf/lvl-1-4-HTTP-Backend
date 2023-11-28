@@ -1,4 +1,5 @@
-export function findUserHandler() {
+/* eslint-disable no-use-before-define */
+export default function findUserHandler() {
   const findBtn = document.querySelector(".find__button");
 
   findBtn.addEventListener("click", findUser);
@@ -17,7 +18,7 @@ function findUser() {
 
     let isExactMatch = false;
 
-    if (parseInt(inputValue)) {
+    if (parseInt(inputValue, 10)) {
       const dateTDs = document.querySelectorAll(".date");
 
       dateTDs.forEach((td) => {
