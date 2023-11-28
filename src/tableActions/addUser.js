@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { getColumns, getUrl } from "../tableRender/tableConfig";
+import processData from "../tableRender/dataProcessor";
 import { renderData } from "../tableRender/dataRenderer";
 
 export default function addUserHandler() {
@@ -78,8 +79,8 @@ async function addUser() {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
-    await renderData();
+    const userObject = await processData("GET", getUrl());
+    renderData(userObject);
   } catch (error) {
     throw new Error(error.message);
   }
