@@ -1,0 +1,42 @@
+[
+  {
+    "parent": "#usersTable",
+    "columns": [
+      {
+        "title": "Ім’я",
+        "value": "name"
+      },
+      {
+        "title": "Прізвище",
+        "value": "surname"
+      },
+      {
+        "title": "Аватар",
+        "value": "renderImage"
+      },
+      {
+        "title": "Дата Народження",
+        "value": "renderDate"
+      }
+    ],
+    "apiUrl": "https://mock-api.shpp.me/mneklesa/users"
+  },
+  {
+    "parent": "#productsTable",
+    "columns": [
+      {
+        "title": "Назва",
+        "value": "title"
+      },
+      {
+        "title": "Ціна",
+        "value": "renderPrice"
+      },
+      {
+        "title": "Колір",
+        "value": "renderColor"
+      }
+    ],
+    "apiUrl": "https://mock-api.shpp.me/mneklesa/products"
+  }
+]
