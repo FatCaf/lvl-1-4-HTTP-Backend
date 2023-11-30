@@ -1,41 +1,52 @@
-/* eslint-disable no-use-before-define */
-const config1 = {
-  parent: "#usersTable",
-  columns: [
-    { title: "Ім’я", value: "name" },
-    { title: "Прізвище", value: "surname" },
-    {
-      title: "Аватар",
-      value: "avatar",
-      render: "true",
-    },
-    {
-      title: "Дата Народження",
-      value: "birthday",
-      render: "true",
-    },
-  ],
+import functions from "./configFunctions";
 
-  apiURL: "https://mock-api.shpp.me/mneklesa/users",
-};
+import tableconfig from "../tableconfig.json";
 
-export function getParent() {
-  if (Object.prototype.hasOwnProperty.call(config1, "parent")) {
-    return config1.parent;
+function replaceRenderFunctions(config) {
+  config.forEach((item) => {
+    if (item && item.columns) {
+      item.columns.forEach((column) => {
+        if (
+          typeof column.value === "string" &&
+          column.value.startsWith("render")
+        ) {
+          const functionName = column.value;
+          const renderFunction = functions[functionName];
+
+          if (typeof renderFunction === "function") {
+            // eslint-disable-next-line no-param-reassign
+            column.value = renderFunction;
+          } else {
+            // eslint-disable-next-line no-console
+            console.warn(`Function ${functionName} not found.`);
+          }
+        }
+      });
+    }
+  });
+
+  return config;
+}
+
+export const configs = replaceRenderFunctions(tableconfig);
+
+export function getParent(config) {
+  if (Object.prototype.hasOwnProperty.call(config, "parent")) {
+    return config.parent;
   }
   return null;
 }
 
-export function getColumns() {
-  if (Object.prototype.hasOwnProperty.call(config1, "columns")) {
-    return config1.columns;
+export function getColumns(config) {
+  if (Object.prototype.hasOwnProperty.call(config, "columns")) {
+    return config.columns;
   }
   return null;
 }
 
-export function getUrl() {
-  if (Object.prototype.hasOwnProperty.call(config1, "apiURL")) {
-    return config1.apiURL;
+export function getUrl(config) {
+  if (Object.prototype.hasOwnProperty.call(config, "apiUrl")) {
+    return config.apiUrl;
   }
   return null;
 }
