@@ -1,72 +1,47 @@
-/* eslint-disable no-use-before-define */
 /* eslint-disable no-restricted-syntax */
 
 /**
  * Fill the td elements in table with specified data from api url.
  */
-export function renderData(userObject) {
+export function renderData(userObject, columns) {
   const tableBody = document.querySelector(".table__body");
-  const tableHeader = document.querySelector(".table__header");
   tableBody.innerHTML = "";
 
-  // eslint-disable-next-line guard-for-in
   for (const user in userObject) {
-    tableBody.insertAdjacentHTML(
-      "beforeend",
-      `
-        <tr class="table__body__row" id="${user}"></tr>
-        `,
-    );
+    if (Object.prototype.hasOwnProperty.call(userObject, user)) {
+      tableBody.insertAdjacentHTML(
+        "beforeend",
+        `
+          <tr class="table__body__row" id="${user}"></tr>
+          `,
+      );
 
-    const tableRow = document.querySelector(".table__body__row:last-child");
-
-    for (const key in userObject[user]) {
-      if (tableHeader.querySelector(`.${key}`).getAttribute("data-render")) {
-        if (isLink(userObject[user][key])) {
-          const source = userObject[user][key];
+      const tableRow = document.querySelector(".table__body__row:last-child");
+      for (const item of columns) {
+        if (typeof item.value === "function") {
           tableRow.insertAdjacentHTML(
             "beforeend",
             `
-          <td><img src="${source}"/></td>`,
+          <td>${item.value(userObject[user])}</td>`,
           );
         } else {
-          const date = renderDate(userObject[user][key]);
           tableRow.insertAdjacentHTML(
             "beforeend",
             `
-          <td class="date">${date}</td>`,
+                <td>${userObject[user][item.value]}</td>`,
           );
         }
-      } else {
-        tableRow.insertAdjacentHTML(
-          "beforeend",
-          `
-          <td>${userObject[user][key]}</td>`,
-        );
       }
+
+      tableRow.insertAdjacentHTML(
+        "beforeend",
+        `<td class="options"><button class="delete__button"
+      data-id="${user}">Delete</button></td>`,
+      );
     }
-
-    tableRow.insertAdjacentHTML(
-      "beforeend",
-      `<td class="options"><button class="delete__button"
-    data-id="${user}">Delete</button></td>`,
-    );
   }
+
   return true;
-}
-
-function renderDate(value) {
-  const date = new Date(value);
-  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-  const month =
-    date.getMonth() + 1 < 10 ? `0${date.getMonth()}` : date.getMonth();
-  return `${day}.${month}.${date.getFullYear()}`;
-}
-
-function isLink(link) {
-  const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
-  return urlRegex.test(link);
 }
 
 /**
@@ -84,11 +59,11 @@ export function renderHeaders(columns) {
   const header = document.querySelector(".table__header__row");
 
   for (const item of columns) {
-    if (Object.prototype.hasOwnProperty.call(item, "render")) {
+    if (typeof item.value === "function") {
       header.insertAdjacentHTML(
         "beforeend",
         `
-              <th class="${item.value}" data-render="true">${item.title}</th>`,
+              <th class="function">${item.title}</th>`,
       );
     } else {
       header.insertAdjacentHTML(
