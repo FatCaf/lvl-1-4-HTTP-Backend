@@ -1,42 +1,41 @@
-/* eslint-disable no-restricted-syntax */
-
 /**
  * Fill the td elements in table with specified data from api url.
  */
-export function renderData(userObject, columns) {
-  const tableBody = document.querySelector(".table__body");
+export function renderData(dataObject, columns, hash) {
+  const tableBody = document.querySelector(`.${hash}__table__body`);
   tableBody.innerHTML = "";
 
-  for (const user in userObject) {
-    if (Object.prototype.hasOwnProperty.call(userObject, user)) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const dataItem in dataObject) {
+    if (Object.prototype.hasOwnProperty.call(dataObject, dataItem)) {
       tableBody.insertAdjacentHTML(
         "beforeend",
         `
-          <tr class="table__body__row" id="${user}"></tr>
+          <tr class="${hash}__table__body__row" id="${dataItem}"></tr>
           `,
       );
-
-      const tableRow = document.querySelector(".table__body__row:last-child");
-      for (const item of columns) {
+      const tableRow = document.querySelector(
+        `.${hash}__table__body__row:last-child`,
+      );
+      columns.forEach((item) => {
         if (typeof item.value === "function") {
           tableRow.insertAdjacentHTML(
             "beforeend",
             `
-          <td>${item.value(userObject[user])}</td>`,
+          <td>${item.value(dataObject[dataItem])}</td>`,
           );
         } else {
           tableRow.insertAdjacentHTML(
             "beforeend",
             `
-                <td>${userObject[user][item.value]}</td>`,
+                <td>${dataObject[dataItem][item.value]}</td>`,
           );
         }
-      }
-
+      });
       tableRow.insertAdjacentHTML(
         "beforeend",
-        `<td class="options"><button class="delete__button"
-      data-id="${user}">Delete</button></td>`,
+        `<td class="options"><button class="${hash}__delete__button del__btn"
+      data-id="${dataItem}">Delete</button></td>`,
       );
     }
   }
@@ -47,18 +46,17 @@ export function renderData(userObject, columns) {
 /**
  * Rendering table header, depends on table configuration.
  */
-export function renderHeaders(columns) {
-  const tableHeader = document.querySelector(".table__header");
-
+export function renderHeaders(columns, hash) {
+  const tableHeader = document.querySelector(`.${hash}__table__header`);
   tableHeader.insertAdjacentHTML(
     "beforeend",
-    `<tr class="table__header__row">
+    `<tr class="${hash}__table__header__row">
       </tr>`,
   );
 
-  const header = document.querySelector(".table__header__row");
+  const header = document.querySelector(`.${hash}__table__header__row`);
 
-  for (const item of columns) {
+  columns.forEach((item) => {
     if (typeof item.value === "function") {
       header.insertAdjacentHTML(
         "beforeend",
@@ -72,23 +70,23 @@ export function renderHeaders(columns) {
               <th class="${item.value}">${item.title}</th>`,
       );
     }
-  }
+  });
 
   header.insertAdjacentHTML("beforeend", '<th class="actions">Дії</th>');
 }
 
-export function renderStructure(parentElement) {
+export function renderStructure(parentElement, hash) {
   const table = document.createElement("table");
 
   document
     .querySelector(parentElement)
     .insertAdjacentElement("afterbegin", table);
-
+  table.classList.add(`${hash}__table`);
   table.insertAdjacentHTML(
     "afterbegin",
     `
-        <thead class="table__header">
+        <thead class="${hash}__table__header">
         </thead>
-        <tbody class="table__body"></tbody>`,
+        <tbody class="${hash}__table__body"></tbody>`,
   );
 }
