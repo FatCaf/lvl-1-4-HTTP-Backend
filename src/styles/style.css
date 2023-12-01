@@ -17,6 +17,14 @@ button {
   justify-content: space-around;
 }
 
+#usersTable,
+#productsTable {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+
 .tables__row {
   display: flex;
   justify-content: center;
@@ -63,7 +71,7 @@ tr:nth-child(even) {
   height: 14vh;
 }
 
-.add__button,
+.add__btn,
 .add {
   background-color: green;
   border-radius: 4px;
@@ -77,13 +85,13 @@ tr:nth-child(even) {
   margin-left: 0.3125rem;
 }
 
-.find__button {
+.find__btn {
   background-color: yellow;
   border-radius: 4px;
   font-size: 1.125rem;
 }
 
-.delete__button {
+.del__btn {
   background-color: red;
   font-size: 1.5rem;
   border-radius: 4px;
