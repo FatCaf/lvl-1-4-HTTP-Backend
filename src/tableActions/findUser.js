@@ -1,17 +1,17 @@
 /* eslint-disable no-use-before-define */
-export default function findUserHandler() {
-  const findBtn = document.querySelector(".find__button");
+export default function findUserHandler(hash) {
+  const findBtn = document.querySelector(`.${hash}__find__button`);
 
-  findBtn.addEventListener("click", findUser);
+  findBtn.addEventListener("click", () => findUser(hash));
 }
 
 /**
  * Finds user by specified data from input field.
  */
-function findUser() {
-  const [...userInfo] = document.querySelectorAll(".table__body__row");
+function findUser(hash) {
+  const [...userInfo] = document.querySelectorAll(`.${hash}__table__body__row`);
 
-  const inputValue = document.querySelector(".find__user").value;
+  const inputValue = document.querySelector(`.{hash}__find__user`).value;
 
   userInfo.forEach((row) => {
     const tdElements = row.querySelectorAll("td");
