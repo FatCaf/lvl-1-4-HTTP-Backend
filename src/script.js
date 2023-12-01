@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import "./styles/style.css";
 
 import {
@@ -16,9 +15,7 @@ import {
 
 import processData from "./tableRender/dataProcessor";
 
-import addUserHandler from "./tableActions/addUser";
-import findUserHandler from "./tableActions/findUser";
-import deleteUserHandler from "./tableActions/deleteUser";
+import addTableActions from "./tableActions/tableActions";
 
 function delay(ms) {
   return new Promise((resolve) => {
@@ -26,24 +23,48 @@ function delay(ms) {
   });
 }
 
+async function generateAndTruncateHashCode() {
+  const randomValue = Math.random().toString(36).substring(2);
+
+  const encoder = new TextEncoder();
+  const data = encoder.encode(randomValue);
+
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+
+  const firstCharacter = hashHex[0].match(/[a-fA-F]/) ? hashHex[0] : "a";
+
+  const truncatedHash = firstCharacter + hashHex.substring(0, 4);
+
+  return truncatedHash;
+}
+
+let index = 0;
+
 async function dataTable(config) {
-  for (const element of config) {
-    const columns = getColumns(element);
-    const url = getUrl(element);
-    const parent = getParent(element);
+  if (index >= config.length) return;
+  const hash = await generateAndTruncateHashCode();
 
-    // eslint-disable-next-line no-await-in-loop
-    const userObject = await processData("GET", url);
+  const columns = getColumns(config[index]);
+  const url = getUrl(config[index]);
+  const parent = getParent(config[index]);
 
-    renderStructure(parent);
-    renderHeaders(columns);
-    if (renderData(userObject, columns)) deleteUserHandler(url);
-    addUserHandler();
-    findUserHandler();
+  const dataObject = await processData("GET", url);
 
-    // eslint-disable-next-line no-await-in-loop
-    await delay(1000);
-  }
+  renderStructure(parent, hash);
+  renderHeaders(columns, hash);
+  renderData(dataObject, columns, hash);
+  addTableActions(hash, columns, url);
+
+  await delay(1000);
+
+  index += 1;
+
+  await dataTable(config);
 }
 
 await dataTable(configs);
