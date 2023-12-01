@@ -4,19 +4,23 @@
     "columns": [
       {
         "title": "Ім’я",
-        "value": "name"
+        "value": "name",
+        "input": { "type": "text", "required": true }
       },
       {
         "title": "Прізвище",
-        "value": "surname"
+        "value": "surname",
+        "input": { "type": "text", "required": true }
       },
       {
         "title": "Аватар",
-        "value": "renderImage"
+        "value": "renderImage",
+        "input": { "type": "url", "name": "avatar", "required": true }
       },
       {
         "title": "Дата Народження",
-        "value": "renderDate"
+        "value": "renderDate",
+        "input": { "type": "date", "name": "birthday", "required": true }
       }
     ],
     "apiUrl": "https://mock-api.shpp.me/mneklesa/users"
@@ -26,15 +30,64 @@
     "columns": [
       {
         "title": "Назва",
-        "value": "title"
+        "value": "title",
+        "input": { "type": "text", "required": true }
       },
       {
         "title": "Ціна",
-        "value": "renderPrice"
+        "value": "renderPrice",
+        "input": [
+          {
+            "type": "number",
+            "name": "price",
+            "label": "Ціна",
+            "required": true
+          },
+          {
+            "type": "select",
+            "name": "currency",
+            "label": "Валюта",
+            "options": [
+              "៛",
+              "฿",
+              "₹",
+              "лв",
+              "руб",
+              "$",
+              "ман",
+              "Lek",
+              "₨",
+              "₡",
+              "﷼",
+              "kr",
+              "CHF",
+              "Bs",
+              "£",
+              "C$",
+              "₺",
+              "Q",
+              "Дин.",
+              "P",
+              "kn",
+              "Kč",
+              "Ft",
+              "Ls",
+              "₭",
+              "S",
+              "Nu"
+            ],
+            "required": false
+          }
+        ]
       },
       {
         "title": "Колір",
-        "value": "renderColor"
+        "value": "renderColor",
+        "input": {
+          "type": "color",
+          "name": "color",
+          "required": true
+        }
       }
     ],
     "apiUrl": "https://mock-api.shpp.me/mneklesa/products"
