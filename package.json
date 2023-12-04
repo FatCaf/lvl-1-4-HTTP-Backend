@@ -10,7 +10,8 @@
     "prod": "cross-env NODE_ENV=production webpack --mode production",
     "lint": "eslint ./src/**/*.*",
     "lint:fix": "eslint ./src/**/*.* --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy": "gh-pages -d dist"
   },
   "lint-staged": {
     "*.js": [
@@ -28,7 +29,7 @@
   "bugs": {
     "url": "https://github.com/FatCaf/lvl-1-4-HTTP-Backend/issues"
   },
-  "homepage": "https://github.com/FatCaf/lvl-1-4-HTTP-Backend#readme",
+  "homepage": "https://FatCaf.github.io/lvl-1-4-HTTP-Backend",
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
@@ -40,6 +41,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-webpack-plugin": "^4.0.1",
+    "gh-pages": "^6.1.0",
     "html-webpack-plugin": "^5.5.3",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",

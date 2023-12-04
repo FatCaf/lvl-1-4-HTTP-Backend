@@ -1,9 +1,9 @@
 node_modules/
-.husky
+
 package-lock.json
-webpack.config.js
+
 dist/
-.eslintrc.js
+
 
 .vscode/*
 .vscode/settings.json
