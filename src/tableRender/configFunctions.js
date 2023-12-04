@@ -1,17 +1,29 @@
+/**
+ * Gets and string value with date and returns proper formatted date string.
+ *
+ * @param {String} value
+ * @returns date in format yyy-mm-dd.
+ */
 function getAge(value) {
-  const date = new Date(value);
-  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-  const month =
-    date.getMonth() + 1 < 10 ? `0${date.getMonth()}` : date.getMonth();
-  return `${day}.${month}.${date.getFullYear()}`;
+  const dateValue = new Date(value);
+  const formattedDate = dateValue.toISOString().split("T")[0];
+  return formattedDate;
 }
 
+/**
+ * Gets an string with color and returns div with this color on background.
+ *
+ * @param {String} color
+ * @returns div element with specified color.
+ */
 function getColorLabel(color) {
   return `<div style="background-color: ${color}; width: 90%;
      height: 90%;
      position: absolute;
-     left:0;
-     top:0;"></div>`;
+     left:5%;
+     top:5%;
+     right:5%;
+     bottom:0;"></div>`;
 }
 
 const renderImage = (user) =>

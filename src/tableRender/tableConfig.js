@@ -2,6 +2,13 @@ import functions from "./configFunctions";
 
 import tableconfig from "../tableconfig.json";
 
+/**
+ * Gets an array with configs and replaces strings which point function name
+ * to real functions.
+ *
+ * @param {Array} config array of configs.
+ * @returns array of configs with from configFunctions.js
+ */
 function replaceRenderFunctions(config) {
   config.forEach((item) => {
     if (item && item.columns) {
@@ -17,8 +24,8 @@ function replaceRenderFunctions(config) {
             // eslint-disable-next-line no-param-reassign
             column.value = renderFunction;
           } else {
-            // eslint-disable-next-line no-console
-            console.warn(`Function ${functionName} not found.`);
+            // eslint-disable-next-line no-alert
+            alert(`Function ${functionName} not found.`);
           }
         }
       });

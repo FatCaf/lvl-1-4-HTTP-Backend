@@ -1,5 +1,10 @@
 /**
- * Fill the td elements in table with specified data from api url.
+ * Create and fill td elements with specified data from dataObject.
+ * Each element linked to table by hash code.
+ *
+ * @param {Object} dataObject object with data to render.
+ * @param {Array} columns  array with column headers.
+ * @param {String} hash unique hash code for table.
  */
 export function renderData(dataObject, columns, hash) {
   const tableBody = document.querySelector(`.${hash}__table__body`);
@@ -22,29 +27,32 @@ export function renderData(dataObject, columns, hash) {
           tableRow.insertAdjacentHTML(
             "beforeend",
             `
-          <td>${item.value(dataObject[dataItem])}</td>`,
+          <td class="${hash}td">${item.value(dataObject[dataItem])}</td>`,
           );
         } else {
           tableRow.insertAdjacentHTML(
             "beforeend",
             `
-                <td>${dataObject[dataItem][item.value]}</td>`,
+                <td class="${hash}td">${dataObject[dataItem][item.value]}</td>`,
           );
         }
       });
       tableRow.insertAdjacentHTML(
         "beforeend",
-        `<td class="options"><button class="${hash}__delete__button del__btn"
-      data-id="${dataItem}">Delete</button></td>`,
+        `<td class="${hash}options options"><button class="${hash}__delete__button del__btn"
+      data-id="${dataItem}">Delete</button>
+      <button class="${hash}__edit__button edt__btn" data-id="${dataItem}">Edit</button>
+      </td>`,
       );
     }
   }
-
-  return true;
 }
 
 /**
- * Rendering table header, depends on table configuration.
+ * Gets an array with headers and hash code and builds table header.
+ *
+ * @param {Array} columns array with column headers.
+ * @param {String} hash unique hash code for table.
  */
 export function renderHeaders(columns, hash) {
   const tableHeader = document.querySelector(`.${hash}__table__header`);
@@ -75,6 +83,12 @@ export function renderHeaders(columns, hash) {
   header.insertAdjacentHTML("beforeend", '<th class="actions">Дії</th>');
 }
 
+/**
+ * Gets name and hash code and build structure for table.
+ *
+ * @param {String} parentElement id of html tag where table need to be rendered.
+ * @param {String} hash unique hash code for table.
+ */
 export function renderStructure(parentElement, hash) {
   const table = document.createElement("table");
 
