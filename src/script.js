@@ -23,6 +23,11 @@ function delay(ms) {
   });
 }
 
+/**
+ * Creates and returns unique hash code for each table.
+ *
+ * @returns unique hash code for table.
+ */
 async function generateAndTruncateHashCode() {
   const randomValue = Math.random().toString(36).substring(2);
 
