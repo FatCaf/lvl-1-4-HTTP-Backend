@@ -2,51 +2,49 @@
 
 This repository contains JavaScript code for rendering and managing tables. It includes components for fetching data, rendering tables, configuring table options, and performing user actions.
 https://fatcaf.github.io/lvl-1-4-HTTP-Backend/
-### Table Rendering
 
-The `tableRender` folder contains three files for rendering tables:
+### Project Structure
 
-- `dataProcessor.js`: Sends a request to fetch data, processes the response into a JavaScript object, and prepares it for rendering.
+- " 'scr':
 
-- `dataRenderer.js`: Utilizes the data from `dataProcessor.js` to generate an HTML table structure.
+  - 'styles':
 
-- `tableConfig.js`: Provides configuration options for customizing the table appearance and behavior.
+    - `style.css`: Main style file.
 
-### Table Actions
+  - 'tableActions':
 
-The `tableActions` folder contains three files for managing user actions on the table:
+    - `addData.js`: Handles adding new user data to the table.
+    - `deleteData.js`: Enables removing selected users from the table.
 
-- `addUser.js`: Handles adding new user data to the table.
+    - `editData.js`: Enables editing data in table.
 
-- `findUser.js`: Facilitates searching for specific users within the table.
+    - `editAndAddHelpers.js`: Helper file for creating input block for add or edit data.
 
-- `deleteUser.js`: Enables removing selected users from the table.
+    - `findData.js`: Facilitates searching for specific users within the table.
 
-### Main Script and Styles
+    - `tableActions.js`: Main file of `tableActions` folder, which plugins action functions into the running script.
 
-The repository also includes three additional files:
+  - 'tableRender':
 
-- `script.js`: The main JavaScript file, responsible for integrating the table rendering and action components.
+    - `configFunctions.js`: Provides a render functions which works with data, color and etc. for config.
 
-- `style.css`: Defines styles for the table and its elements.
+    - `dataProcessor.js`: Sends a request to fetch data, processes the response into a JavaScript object, and prepares it for rendering.
 
-- `index.html`: Provides the HTML layout for the table component.
+    - `dataRenderer.js`: Utilizes the data from `dataProcessor.js` to generate an HTML table structure.
+
+    - `tableConfig.js`: Provides configuration options for customizing the table appearance and behavior.
+
+  - `index.html`: Main page layout.
+
+  - `script.js`: Main script file.
+
+  - `tableconfig.json`: Table config file.
+    "
 
 ### Usage
 
-To create your own table, follow these steps:
+Install dependencies: `npm init`.
 
-**Configure table options:** Open the `tableConfig.js` file and modify the `config` object to specify the API link, table columns, and other desired settings. For example:
+Development: `npm run dev`.
 
-```javascript
-const config1 = {
-  parent: "#usersTable",
-  columns: [
-    { title: "Ім’я", value: "name" },
-    { title: "Прізвище", value: "surname" },
-    { title: "Аватар", value: "avatar", render: "true" },
-    { title: "Дата Народження", value: "birthday", render: "true" },
-  ],
-  apiUrl: "Your Url",
-};
-```
+Production: `npm run prod`.
